@@ -1,0 +1,14 @@
+﻿{% extends "general.html" %}
+
+{% block title %} Registration {% endblock %}
+
+ {% block content %}
+    <h1>Get started</h1>
+
+    <form>
+        <div>
+            {{ form.username(class='form-control', placeholder='Username', autocomplete='off', autofocus=true)}}
+        </div>
+    </form>
+
+    {% endblock %}
