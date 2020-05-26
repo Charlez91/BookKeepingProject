@@ -5,14 +5,15 @@ from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from flask_wtf import Form
-from wtforms import * #Form
+from wtforms import TextField, BooleanField, PasswordField, TextAreaField, SubmitField, validators #Form
 #from fields import *
 from login import *
-
+from wtforms.validators import InputRequired, Length, EqualTo
 DEBUG = True
 import psycopg2 
 
 app = Flask(__name__)
+app.secret_key = 'replace_later'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://ibryriynppxdtm:1275b6e1b940231cd521c3bbeab604da37c50304f8e429cc1b24fc4f2b3d7f58@ec2-54-225-227-125.compute-1.amazonaws.com:5432/d1brpuvqqbfnk1'
 db = SQLAlchemy(app)
 
@@ -39,33 +40,25 @@ db = scoped_session(sessionmaker(bind=engine))
 
 
 class RegistrationForm(Form):
-    username = TextField('Username', [validators.Length(min=4, max=20)])
-    email = TextField('Email Address', [validators.Length(min=6, max=50)])
-    password = PasswordField('Password', [validators.Required(),
-                            validators.EqualTo('confirm', message="Passwords must match.")])
-    confirm = PasswordField('Repeat Password')
-    accept_tos = BooleanField('I accept the <a href="/tos/">Terms of Service</a> and the <a href="/privacy/">Privacy Policy</a>',
-                             [validators.Required()])
+    username = TextField('Username', validators=[InputRequired(message="Username required"), Length(min=4, max=20,
+                                                                               message="Username between 4 and 25 characters")])
+    #email = TextField('Email Address', [validators.Length(min=6, max=50)])
+    password = PasswordField('Password', validators=[InputRequired(message="Use required"), Length(min=4, max=20,
+                                                                               message="Username between 4 and 25 characters")])
+    confirm = PasswordField('Repeat Password', validators=[InputRequired(message="Password required"),
+                                                           EqualTo('password', message="Passwords must match")])
+    #accept_tos = BooleanField('I accept the <a href="/tos/">Terms of Service</a> and the <a href="/privacy/">Privacy Policy</a>',
+                             #[validators.Required()])
 
+    submit_button = SubmitField('Create')
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
-    
+
     reg_form = RegistrationForm()
+    if reg_form.validate_on_submit():
+        return "Success!"
 
-
-    username = reg_form.username.data
-    password = reg_form.password.data
-
-    #check username exists
-    user_object = User.query.filter_by(username=username).first()
-    if user_object:
-        return "This username is taken!"
-    #Add user to DB
-    user = User(username=username, password=password)
-    #db.session.add(user)
-    db.commit()
-        
     return render_template('login.html', form=reg_form)
 
 
@@ -122,21 +115,21 @@ def index():
 #    """renders a sample page."""
 #    return "hello world!"
 
-@app.route('/welcome')
-def welcome():
-    return render_template('welcome.html') #render template
+#@app.route('/welcome')
+#def welcome():
+#    return render_template('welcome.html') #render template
 
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    error = None
-    if request.method == 'POST':
-        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
-            error = 'Invalid credentials. Please try again'
-        else:
-            return redirect(url_for('home'))
-    return render_template('login.html', error=error)
+#@app.route('/login', methods=['GET', 'POST'])
+#def login():
+#    error = None
+#    if request.method == 'POST':
+#        if request.form['username'] != 'admin' or request.form['password'] != 'admin':
+#            error = 'Invalid credentials. Please try again'
+#        else:
+#            return redirect(url_for('home'))
+#    return render_template('login.html', error=error)
 
 
 
