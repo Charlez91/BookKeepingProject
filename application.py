@@ -4,8 +4,9 @@ from flask import Flask, session, render_template, redirect, url_for, request
 from flask_session import Session
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
-from wtforms_fields import * #Form
-
+from flask_wtf import Form
+from wtforms import * #Form
+#from fields import *
 from login import *
 
 DEBUG = True
@@ -49,21 +50,21 @@ class RegistrationForm(Form):
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
-
+    
     reg_form = RegistrationForm()
 
-    if reg_form.validate_on_submit():
-        username = reg_form.username.data
-        password = reg_form.password.data
 
-        #check username exists
-        user_object = User.query.filter_by(username=username).first()
-        if user_object:
-            return "This username is taken!"
-        #Add user to DB
-        user = User(username=username, password=password)
-        db.session.add(user)
-        db.commit()
+    username = reg_form.username.data
+    password = reg_form.password.data
+
+    #check username exists
+    user_object = User.query.filter_by(username=username).first()
+    if user_object:
+        return "This username is taken!"
+    #Add user to DB
+    user = User(username=username, password=password)
+    #db.session.add(user)
+    db.commit()
         
     return render_template('login.html', form=reg_form)
 
