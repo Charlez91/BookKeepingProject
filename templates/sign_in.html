@@ -8,7 +8,7 @@
 <h1>Login Now!</h1>
 <p>Enter username/password</p>
 
-<form action="{{ url_for('signin')}}", method="POST">
+<form action="{{ url_for('signin')}}" , method="POST">
 
 
     {{ displayField(form.username, 'Username', autocomplete="off", autofocus=true)}}

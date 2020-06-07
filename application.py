@@ -12,6 +12,10 @@ from login import db
 from wtforms.validators import InputRequired, Length, EqualTo, ValidationError
 import psycopg2
 from psycopg2 import connect
+import pprint
+import requests
+res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": "HMOBPhAT2PnNTFaV4BiqEw", "isbns": "9781632168146"})
+print(res.json())
 DEBUG = True
 FLASK_DEBUG=1
 
@@ -116,40 +120,22 @@ def signin():
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #@app.route("/add")
-#def add_book():
-#    name=request.args.get('name')
-#    author=request.arg.get('author')
-#    published=request.args.get('published')
-#    try:
-#        book=Book(
-#            name=name,
-#            author=author,
-#            published=published
-#        )
-#        db.session.add(book)
-#        db.session.commit()
-#        return "Book added. book id={}".format(book.id)
-#    except Exception as e:
-#        return(str(e))
+def add_book():
+    name=request.args.get('name')
+    author=request.arg.get('author')
+    published=request.args.get('published')
+    try:
+        book=Book(
+            name=name,
+            author=author,
+            published=published
+        )
+        db.session.add(book)
+        db.session.commit()
+        return "Book added. book id={}".format(book.id)
+    except Exception as e:
+        return(str(e))
 
 
 
