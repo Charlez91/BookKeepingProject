@@ -1,0 +1,50 @@
+﻿{% from "form_helper.html" import displayField %}
+{% extends "general.html" %}
+{% block title %}search page {% endblock %}
+
+{% block content %}
+
+
+{% with messages = get_flashed_messages() %}
+        {% if messages %}
+
+    {% for message in messages %}
+<div class="alert alert-warning alert-dismissible" role="alert">
+    {{message}}
+</div>
+
+    {% endfor %}
+
+        {% endif %}
+     {% endwith %}
+
+
+
+<h2>Search Book Database</h2>
+
+
+
+
+
+<form action = {{ url_for('search_results') }} method="POST">
+
+
+    <dl>
+
+        <p>
+            <!--<input type="number" name="isbn" placeholder="Enter isbn number of book" /><br />-->
+            <input type="text" name="title" placeholder="Enter title of book" /><br />
+            <!--<input type="text" name="author" placeholder="Enter author name" /><br />
+            <input type="text" name="year" placeholder="Enter publication year" /><br />-->
+        </p>
+
+        <p>
+            <input type="submit" value="Search" placeholder="search" /><br />
+        </p>
+            
+           
+    </dl>
+   
+</form>
+
+        {% endblock %}

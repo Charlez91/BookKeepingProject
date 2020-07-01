@@ -4,22 +4,32 @@
 
 {% block title %}Registration {% endblock %}
 
+{% with messages = get_flashed_messages() %}
+        {% if messages %}
+<ul class="flashes">
+    {% for message in messages %}
+    <li>{{ message }}</li>
+    {% endfor %}
+</ul>
+        {% endif %}
+     {% endwith %}
+
  {% block content %}
-    <h1>Get started</h1>
+<h1>Get started</h1>
 
-    <form action="{{ url_for('index')}}" , method="POST">
+<form action="{{ url_for('index')}}" , method="POST">
 
 
-        {{ displayField(form.username, 'Username', autocomplete="off", autofocus=true)}}
-        {{ displayField(form.password, 'Password')}}
-        {{ displayField(form.confirm, 'Confirm Password')}}
-        {{ displayField(form.email, 'Email')}}
+    {{ displayField(form.username, 'Username', autocomplete="off", autofocus=true)}}
+    {{ displayField(form.password, 'Password')}}
+    {{ displayField(form.confirm, 'Confirm Password')}}
+    {{ displayField(form.email, 'Email')}}
 
-        <div>
-            {{ form.submit_button }}
-        </div>
+    <div>
+        {{ form.submit_button }}
+    </div>
 
-        {{ form.csrf_token }}
-    </form>
+    {{ form.csrf_token }}
+</form>
 
     {% endblock %}

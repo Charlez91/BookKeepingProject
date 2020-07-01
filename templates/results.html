@@ -1,0 +1,43 @@
+﻿{% extends "general.html" %}
+{% block title %}results page {% endblock %}
+
+{% from "form_helper.html" import displayField %}
+
+{% block content %}
+
+
+    <h1> results </h1>
+
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+
+    {% for message in messages %}
+<div class="alert alert-warning alert-dismissible" role="alert">
+    {{message}}
+</div>
+
+    {% endfor %}
+
+ {% endif %}
+  {% endwith %}
+
+
+
+
+
+{% for i in range(count) %}
+
+
+<div>
+    <p>
+        isbn: {{ result1[0][i] }}<br>title: {{ result1[1][i] }}
+        <br>author: {{ result1[2][i] }} <br>year: {{ result1[3][i] }}
+
+    </p>
+</div>
+
+{% endfor %}
+{% endblock %}
+
+

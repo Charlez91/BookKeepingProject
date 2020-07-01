@@ -30,9 +30,6 @@ with open('books1.csv', 'r+') as f: #to open and close the csv file automaticall
     #sql = "COPY books1 FROM STDIN DELIMITER '|' CSV HEADER"
     #cur.copy_expert(sql, open('books.csv', "r+"))
     #cur.execute("INSERT INTO books (isbn, name, author, year) VALUES (%s, %s, %s, %s)")
-     #writingq = csv.writer(file,delimiter = ',',lineterminator = '\n', dialect= csv.excel)
-   # for rosunset_angle in complete_2019_don:
-    #    writingq.writerows(rosunset_angle)
-#conn.add(books)
+
 conn.commit()
 
