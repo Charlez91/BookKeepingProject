@@ -1,5 +1,6 @@
 ﻿{% from "form_helper.html" import displayField %}
-{% extends "general.html" %}
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 {% block title %}search page {% endblock %}
 
 {% block content %}
@@ -24,27 +25,26 @@
 
 
 
+<form action={{ url_for('search_results') }} method="POST">
 
 
-<form action = {{ url_for('search_results') }} method="POST">
 
 
-    <dl>
-
+    <div class="col-xs-3">
         <p>
             <!--<input type="number" name="isbn" placeholder="Enter isbn number of book" /><br />-->
-            <input type="text" name="title" placeholder="Enter title of book" /><br />
+            <input type="text" class="form-control" name="title" placeholder="Enter title of book" />
             <!--<input type="text" name="author" placeholder="Enter author name" /><br />
             <input type="text" name="year" placeholder="Enter publication year" /><br />-->
         </p>
+    </div>
 
-        <p>
-            <input type="submit" value="Search" placeholder="search" /><br />
-        </p>
-            
-           
-    </dl>
-   
+    <div>
+        <input class="btn btn-primary" type="submit" value="Search" />
+    </div>
 </form>
+<div>
+    <a href={{url_for('logout') }}>logout</a>
+</div>
 
-        {% endblock %}
+{% endblock %}

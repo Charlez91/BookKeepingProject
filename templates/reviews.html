@@ -1,0 +1,61 @@
+﻿{% from "form_helper.html" import displayField %}
+
+{% extends "bootstrap/base.html" %}
+{% block title %} reviews {% endblock %}
+
+{% block content %}
+    <div>
+        <h3>{{ current_user.username }}</h3>
+    </div>
+<br />
+<div class="container">
+
+    <p>
+        isbn: {{ book.isbn }}<br>title: {{ book.title }}
+        <br>author: {{ book.author }} <br>year: {{ book.year }}
+        <br />Average rating: {{ ave_rating }}
+        <br />Goodreads rating count: {{ ratings_count }}
+        <br />Goodreads average rating: {{ goodreads_rating }}
+    </p>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+
+    {% for message in messages %}
+    <div class="alert alert-warning alert-dismissible" role="alert">
+        {{message}}
+    </div>
+
+    {% endfor %}
+
+    {% endif %}
+    {% endwith %}
+    <form action="" method="POST">
+        {{ displayField(form.comment, 'Comment') }}
+        <br />
+        <b>{{ form.rating.int }}</b> {{ form.rating }}
+        <div>
+            <br />
+            {{ form.submit }}
+            {{ form.csrf_token }}
+            <div>
+                <a href={{url_for('logout') }}>logout</a>
+                <div>
+                    <a href={{url_for('search_page') }}>Search Page</a>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+    {% for b in book_reviews %}
+
+
+    <b>{{ b.users.username }} said</b>
+
+    {% for comment in func(b.users.id, page_id) %}
+    {{comment.comment}}<br />
+    {% endfor %}
+    {% endfor %}
+</div>
+        {% endblock %}

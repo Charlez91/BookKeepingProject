@@ -1,4 +1,5 @@
-﻿{% extends "general.html" %}
+﻿
+{% extends "bootstrap/base.html" %}
 {% block title %}results page {% endblock %}
 
 {% from "form_helper.html" import displayField %}
@@ -6,7 +7,7 @@
 {% block content %}
 
 
-    <h1> results </h1>
+<h1> results </h1>
 
 
 {% with messages = get_flashed_messages() %}
@@ -29,10 +30,12 @@
 {% for i in range(count) %}
 
 
-<div>
+<div class="display-4">
     <p>
-        isbn: {{ result1[0][i] }}<br>title: {{ result1[1][i] }}
-        <br>author: {{ result1[2][i] }} <br>year: {{ result1[3][i] }}
+        isbn: {{ result1[0][i] }}
+        <br><a href={{ url_for('book_details', id=result1[4][i]) }}> title: {{ result1[1][i] }}</a>
+        <br>author: {{ result1[2][i] }}
+        <br>year: {{ result1[3][i] }}
 
     </p>
 </div>

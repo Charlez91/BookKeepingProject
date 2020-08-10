@@ -1,7 +1,7 @@
 ﻿{% from "form_helper.html" import displayField %}
 
-{% extends "general.html" %}
 
+{% extends "bootstrap/base.html" %}
 {% block title %}Registration {% endblock %}
 
 {% with messages = get_flashed_messages() %}
@@ -19,7 +19,7 @@
 
 <form action="{{ url_for('index')}}" , method="POST">
 
-
+    {{ form.csrf_token }}
     {{ displayField(form.username, 'Username', autocomplete="off", autofocus=true)}}
     {{ displayField(form.password, 'Password')}}
     {{ displayField(form.confirm, 'Confirm Password')}}
@@ -28,8 +28,11 @@
     <div>
         {{ form.submit_button }}
     </div>
-
-    {{ form.csrf_token }}
+    <br />
+    <div>
+       Already signed up? <a href={{url_for('login') }}>login</a>
+    </div>
+            {{ form.csrf_token }}
 </form>
 
     {% endblock %}
